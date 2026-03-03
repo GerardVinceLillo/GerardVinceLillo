@@ -27,7 +27,7 @@ LinkedIn: https://www.linkedin.com/in/gerard-vince-lillo/
 
 <div align="center">
 
-### 🎮 Polygon Survivors (Profile Vignette)
+### Contribution Activity
 
 ![](./assets/polygon-swarm.gif)
 
