@@ -3,38 +3,57 @@ import math
 import random
 import datetime as dt
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
-# ---------- Config ----------
+# -----------------------------
+# Config
+# -----------------------------
 USERNAME = os.environ.get("GH_USERNAME", "").strip()
 TOKEN = os.environ.get("GITHUB_TOKEN", "").strip()
+
 OUT_PATH = "assets/polygon-swarm.gif"
 
 W, H = 900, 240
-PAD = 20
 
 GRID_ROWS = 7
-GRID_COLS = 53  # GitHub calendar weeks ~ 52-53
+GRID_COLS = 53
 
 CELL = 11
 GAP = 4
 
 GRID_X0 = 30
-GRID_Y0 = 50
+GRID_Y0 = 60
 
 BG = (7, 16, 12)
-GRID_LINE = (0, 255, 127, 18)  # subtle
 TEXT = (0, 255, 127, 255)
+TEXT_DIM = (0, 255, 127, 180)
 
-# Contribution colors by intensity
+GRID_LINE = (0, 255, 127, 18)
+
 LEVEL_COLORS = [
-    (18, 35, 28),    # 0
-    (15, 70, 45),    # 1
-    (0, 140, 75),    # 2
-    (0, 200, 95),    # 3
-    (0, 255, 127),   # 4
+    (12, 18, 16),   # 0
+    (15, 70, 45),   # 1
+    (0, 140, 75),   # 2
+    (0, 200, 95),   # 3
+    (0, 255, 127),  # 4
 ]
 
+# Player position
+PX, PY = 720, 135
+
+# Combat tuning
+FIRE_EVERY = 5        # lower = faster shooting
+DMG_PER_HIT = 1       # damage per tick
+MAX_ENEMIES = 28      # enemies spawned from contribution blocks
+
+# Visual tuning
+ENEMY_ALPHA = 120
+ENEMY_HIT_ALPHA = 230
+
+
+# -----------------------------
+# GitHub GraphQL helpers
+# -----------------------------
 def gql(query: str, variables: dict):
     if not TOKEN or not USERNAME:
         raise SystemExit("Missing GITHUB_TOKEN or GH_USERNAME env vars.")
@@ -50,8 +69,8 @@ def gql(query: str, variables: dict):
         raise RuntimeError(data["errors"])
     return data["data"]
 
+
 def fetch_contrib_grid():
-    # Past year contribution calendar
     query = """
     query($login:String!) {
       user(login:$login) {
@@ -60,7 +79,6 @@ def fetch_contrib_grid():
             weeks {
               contributionDays {
                 contributionCount
-                weekday
                 date
               }
             }
@@ -72,8 +90,6 @@ def fetch_contrib_grid():
     data = gql(query, {"login": USERNAME})
     weeks = data["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
 
-    # weeks length can be 52-53; normalize to GRID_COLS by trimming/padding left
-    # Each week has 7 days, weekday is 0..6 (Sun..Sat), but contributionDays already ordered Sun..Sat.
     cols = []
     for w in weeks:
         days = w.get("contributionDays", [])
@@ -87,22 +103,25 @@ def fetch_contrib_grid():
 
         cols.append(counts)
 
-    # Ensure exactly GRID_COLS
+    # Normalize to exactly GRID_COLS weeks
     if len(cols) > GRID_COLS:
         cols = cols[-GRID_COLS:]
     elif len(cols) < GRID_COLS:
-        pad_cols = [[0]*7 for _ in range(GRID_COLS - len(cols))]
+        pad_cols = [[0] * 7 for _ in range(GRID_COLS - len(cols))]
         cols = pad_cols + cols
 
-    # Convert to row-major grid [row][col] where row 0 is top (Mon-ish visually),
-    # GitHub shows Sun top sometimes; we'll keep as given (Sun..Sat) but looks fine for effect.
-    grid = [[0]*GRID_COLS for _ in range(GRID_ROWS)]
+    # Convert to row-major [row][col]
+    grid = [[0] * GRID_COLS for _ in range(GRID_ROWS)]
     for c in range(GRID_COLS):
         for r in range(GRID_ROWS):
             grid[r][c] = cols[c][r]
 
     return grid
 
+
+# -----------------------------
+# Drawing helpers
+# -----------------------------
 def level(count: int) -> int:
     if count <= 0:
         return 0
@@ -114,34 +133,82 @@ def level(count: int) -> int:
         return 3
     return 4
 
+
 def cell_pos(r, c):
     x = GRID_X0 + c * (CELL + GAP)
     y = GRID_Y0 + r * (CELL + GAP)
     return x, y
 
+
 def draw_background(draw: ImageDraw.ImageDraw):
     # subtle grid lines
-    for i in range(6):
-        y = GRID_Y0 + i * (CELL + GAP) + CELL/2
-        draw.line((GRID_X0, y, GRID_X0 + GRID_COLS*(CELL+GAP), y), fill=GRID_LINE, width=1)
+    for i in range(GRID_ROWS):
+        y = GRID_Y0 + i * (CELL + GAP) + CELL / 2
+        draw.line((GRID_X0, y, GRID_X0 + GRID_COLS * (CELL + GAP), y), fill=GRID_LINE, width=1)
     for j in range(0, GRID_COLS, 7):
-        x = GRID_X0 + j * (CELL + GAP) + CELL/2
-        draw.line((x, GRID_Y0, x, GRID_Y0 + GRID_ROWS*(CELL+GAP)), fill=GRID_LINE, width=1)
+        x = GRID_X0 + j * (CELL + GAP) + CELL / 2
+        draw.line((x, GRID_Y0, x, GRID_Y0 + GRID_ROWS * (CELL + GAP)), fill=GRID_LINE, width=1)
+
 
 def draw_hud(draw: ImageDraw.ImageDraw, subtitle: str):
     draw.text((26, 18), "POLYGON SWARM // contributions -> enemies", fill=TEXT)
-    draw.text((26, 36), subtitle, fill=(0, 255, 127, 180))
+    draw.text((26, 36), subtitle, fill=TEXT_DIM)
 
+
+# -----------------------------
+# Combat simulation helpers
+# -----------------------------
+def enemy_pos(e, t_swarm):
+    # Move enemies toward player with slight wobble (vampire-survivors vibe)
+    dx = PX - e["x0"]
+    dy = PY - e["y0"]
+    dist = max(1.0, math.hypot(dx, dy))
+    ux, uy = dx / dist, dy / dist
+
+    ex = e["x0"] + ux * (t_swarm * e["speed"] * 1.6) + math.sin(t_swarm * 0.12 + e["phase"]) * 10
+    ey = e["y0"] + uy * (t_swarm * e["speed"] * 1.6) + math.cos(t_swarm * 0.11 + e["phase"]) * 8
+
+    ex = max(30, min(W - 30, ex))
+    ey = max(30, min(H - 30, ey))
+    return ex, ey
+
+
+def pick_target(enemies, t_swarm):
+    best = None
+    best_d = 10**18
+    best_xy = None
+    for e in enemies:
+        if not e.get("alive"):
+            continue
+        ex, ey = enemy_pos(e, t_swarm)
+        d = (ex - PX) ** 2 + (ey - PY) ** 2
+        if d < best_d:
+            best_d = d
+            best = e
+            best_xy = (ex, ey)
+    return best, best_xy
+
+
+def apply_damage(e, dmg=1):
+    e["hp"] -= dmg
+    e["hit_flash"] = 3
+    if e["hp"] <= 0:
+        e["alive"] = False
+        e["death_fx"] = 6  # small fade frames
+
+
+# -----------------------------
+# Frame generation
+# -----------------------------
 def make_frames(grid):
     os.makedirs("assets", exist_ok=True)
 
-    # Deterministic randomness
     seed = int(dt.date.today().strftime("%Y%m%d"))
     rnd = random.Random(seed)
 
-    # Flatten nonzero cells for "spawn" ordering
     coords = [(r, c) for r in range(GRID_ROWS) for c in range(GRID_COLS)]
-    # weighted by activity to appear earlier
+
+    # Reveal order: weighted by contribution level
     weighted = []
     for (r, c) in coords:
         w = 1 + level(grid[r][c]) * 2
@@ -157,133 +224,133 @@ def make_frames(grid):
 
     total_cells = GRID_ROWS * GRID_COLS
 
-    # Phase A: build-in animation (frames)
     build_frames = 55
-    # Phase B: swarm animation (frames)
-    swarm_frames = 70
+    swarm_frames = 90
 
-    # choose which cells become enemies (top N active)
+    # Choose enemy source blocks (top activity)
     active_cells = sorted(
         [(grid[r][c], r, c) for r in range(GRID_ROWS) for c in range(GRID_COLS)],
-        reverse=True
+        reverse=True,
     )
-    # pick up to 26 enemies with count>0
-    enemies_src = [(r, c) for (cnt, r, c) in active_cells if cnt > 0][:26]
+    enemies_src = [(r, c) for (cnt, r, c) in active_cells if cnt > 0][:MAX_ENEMIES]
     if not enemies_src:
-        enemies_src = [(3, 40), (2, 41), (4, 42)]  # fallback
+        enemies_src = [(3, 40), (2, 41), (4, 42)]
 
-    # player position (center-ish right)
-    px, py = 720, 135
-
-    # initial enemy positions (from cell centers)
     enemies = []
     for (r, c) in enemies_src:
         x, y = cell_pos(r, c)
-        enemies.append({
-            "x0": x + CELL/2,
-            "y0": y + CELL/2,
-            "phase": rnd.random() * math.tau,
-            "speed": 0.8 + rnd.random() * 1.2,
-            "rad": 3 + level(grid[r][c]),
-        })
+        lv = level(grid[r][c])
+        enemies.append(
+            {
+                "src": (r, c),
+                "x0": x + CELL / 2,
+                "y0": y + CELL / 2,
+                "phase": rnd.random() * math.tau,
+                "speed": 0.7 + rnd.random() * 1.6,
+                "rad": 3 + lv,
+                "hp": 2 + lv * 2,     # tougher for higher activity blocks
+                "alive": True,
+                "hit_flash": 0,
+                "death_fx": 0,
+            }
+        )
 
     frames = []
 
-    def render(base_revealed_set, t_swarm=None):
+    def render(revealed_set, t_swarm=None):
         im = Image.new("RGBA", (W, H), BG)
         draw = ImageDraw.Draw(im)
-
         draw_background(draw)
 
-        # Draw contribution cells
+        # Contribution cells
         for r in range(GRID_ROWS):
             for c in range(GRID_COLS):
-                if (r, c) not in base_revealed_set:
-                    # unrevealed -> dark placeholder
-                    col = (12, 18, 16)
+                x, y = cell_pos(r, c)
+                if (r, c) not in revealed_set:
+                    col = (10, 14, 13)
                 else:
-                    lv = level(grid[r][c])
-                    col = LEVEL_COLORS[lv]
-                x, y = cell_pos(r, c)
-                draw.rounded_rectangle((x, y, x+CELL, y+CELL), radius=3, fill=col)
+                    col = LEVEL_COLORS[level(grid[r][c])]
+                draw.rounded_rectangle((x, y, x + CELL, y + CELL), radius=3, fill=col)
 
-        # Player core + pulse ring
-        draw.ellipse((px-22, py-22, px+22, py+22), outline=(0,255,127,255), width=2)
-        # small polygon
-        poly = [(px, py-14), (px+12, py-4), (px+8, py+12), (px-8, py+12), (px-12, py-4)]
-        draw.polygon(poly, outline=(0,255,127,255), fill=(0,255,127,30))
+        # Player
+        draw.ellipse((PX - 22, PY - 22, PX + 22, PY + 22), outline=(0, 255, 127, 255), width=2)
+        poly = [(PX, PY - 14), (PX + 12, PY - 4), (PX + 8, PY + 12), (PX - 8, PY + 12), (PX - 12, PY - 4)]
+        draw.polygon(poly, outline=(0, 255, 127, 255), fill=(0, 255, 127, 30))
 
-        # Swarm phase overlays
-        if t_swarm is not None:
-            # make some enemies detach from their cells: we "erase" their source square to look like it became the enemy
-            for (src, e) in zip(enemies_src, enemies):
-                r, c = src
-                x, y = cell_pos(r, c)
-                # dim source block
-                draw.rounded_rectangle((x, y, x+CELL, y+CELL), radius=3, fill=(10, 20, 16))
+        if t_swarm is None:
+            return im
 
-            # enemies move toward player with a little orbit noise
-            for e in enemies:
-                dx = px - e["x0"]
-                dy = py - e["y0"]
-                dist = max(1.0, math.hypot(dx, dy))
-                ux, uy = dx/dist, dy/dist
+        # Dim the source blocks that "became" enemies
+        for e in enemies:
+            r, c = e["src"]
+            x, y = cell_pos(r, c)
+            draw.rounded_rectangle((x, y, x + CELL, y + CELL), radius=3, fill=(8, 16, 13))
 
-                # approach factor
-                k = 0.55 + 0.45*math.sin(t_swarm*0.08 + e["phase"])
-                ex = e["x0"] + ux * (t_swarm * e["speed"] * 1.6) + math.sin(t_swarm*0.12 + e["phase"]) * 10
-                ey = e["y0"] + uy * (t_swarm * e["speed"] * 1.6) + math.cos(t_swarm*0.11 + e["phase"]) * 8
+        # FIRE: aim laser at nearest enemy and apply damage
+        lasers = []
+        if t_swarm % FIRE_EVERY == 0:
+            target, txy = pick_target(enemies, t_swarm)
+            if target and txy:
+                apply_damage(target, DMG_PER_HIT)
+                lasers.append((PX, PY, txy[0], txy[1]))
 
-                # clamp a bit
-                ex = max(30, min(W-30, ex))
-                ey = max(30, min(H-30, ey))
+        # update hit flash + death fx timers
+        for e in enemies:
+            if e["hit_flash"] > 0:
+                e["hit_flash"] -= 1
+            if (not e["alive"]) and e["death_fx"] > 0:
+                e["death_fx"] -= 1
 
-                # enemy draw
-                r0 = e["rad"]
-                draw.ellipse((ex-r0, ey-r0, ex+r0, ey+r0), fill=(0,255,127,110))
+        # Draw lasers (glow + core line)
+        for (x1, y1, x2, y2) in lasers:
+            draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 120), width=6)
+            draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 235), width=2)
 
-            # “tick” projectiles (vampire survivors vibe)
-            if int(t_swarm) % 12 == 0:
-                draw.line((px, py, px-150, py+60), fill=(0,255,127,200), width=2)
-                draw.line((px, py, px-120, py-55), fill=(0,255,127,200), width=2)
+        # Draw enemies (alive only); dead have a brief fade-out sparkle
+        for e in enemies:
+            ex, ey = enemy_pos(e, t_swarm)
+            r0 = e["rad"]
 
-        return im.convert("P", palette=Image.ADAPTIVE)
+            if e["alive"]:
+                if e["hit_flash"] > 0:
+                    fill = (0, 255, 127, ENEMY_HIT_ALPHA)
+                else:
+                    fill = (0, 255, 127, ENEMY_ALPHA)
+                draw.ellipse((ex - r0, ey - r0, ex + r0, ey + r0), fill=fill)
+            else:
+                if e["death_fx"] > 0:
+                    a = int(180 * (e["death_fx"] / 6))
+                    # tiny "xp pop"
+                    draw.ellipse((ex - 2, ey - 2, ex + 2, ey + 2), fill=(0, 255, 127, a))
 
-    # Build phase: reveal squares gradually
+        return im
+
+    # Phase A: build (reveal squares gradually)
     revealed = set()
     for i in range(build_frames):
-        # reveal a chunk each frame
-        target = int((i+1) / build_frames * total_cells)
+        target = int((i + 1) / build_frames * total_cells)
         while len(revealed) < min(target, len(appear_order)):
             revealed.add(appear_order[len(revealed)])
-        subtitle = "phase: BUILD // forging blocks from commits"
-        im = Image.new("RGBA", (W, H), BG)
-        draw = ImageDraw.Draw(im)
-        draw_hud(draw, subtitle)
-        frame = render(revealed, None)
-        # re-draw HUD on top after palette conversion? easiest: render HUD before palette conversion in render, so do here:
-        # We'll just paste text onto palettized frame using RGBA conversion:
-        fr = frame.convert("RGBA")
-        d2 = ImageDraw.Draw(fr)
-        draw_hud(d2, subtitle)
-        frames.append(fr.convert("P", palette=Image.ADAPTIVE))
 
-    # Swarm phase: enemies detach and move
+        frame = render(revealed, None)
+        d = ImageDraw.Draw(frame)
+        draw_hud(d, "phase: BUILD // forging blocks from commits")
+        frames.append(frame.convert("P", palette=Image.ADAPTIVE))
+
+    # Phase B: swarm (blocks become enemies + targeted laser kills)
     for t in range(swarm_frames):
-        subtitle = "phase: SWARM // blocks become entities"
-        fr = render(revealed, t_swarm=t)
-        fr = fr.convert("RGBA")
-        d2 = ImageDraw.Draw(fr)
-        draw_hud(d2, subtitle)
-        frames.append(fr.convert("P", palette=Image.ADAPTIVE))
+        frame = render(revealed, t_swarm=t)
+        d = ImageDraw.Draw(frame)
+        draw_hud(d, "phase: SWARM // laser targets • enemies disappear")
+        frames.append(frame.convert("P", palette=Image.ADAPTIVE))
 
     return frames
+
 
 def main():
     grid = fetch_contrib_grid()
     frames = make_frames(grid)
 
-    # Save GIF
     frames[0].save(
         OUT_PATH,
         save_all=True,
@@ -294,6 +361,7 @@ def main():
         optimize=False,
     )
     print(f"wrote {OUT_PATH}")
+
 
 if __name__ == "__main__":
     main()
