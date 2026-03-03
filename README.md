@@ -17,8 +17,7 @@
 - **Trend Micro FSS on AWS:** CloudFormation deploy + S3 scanning pipeline (clean → clean bucket, malicious → quarantine bucket)
 
 ## Projects
-- **GuardSweep** — security automation & monitoring toolkit (Python)  
-- **Windows Vulnerability Scanner** — Windows misconfig auditing + structured reporting  
+- **GuardSweep** — security automation & monitoring toolkit (Python)
 
 ## Contact
 Website: https://gerardvincelillo.com  

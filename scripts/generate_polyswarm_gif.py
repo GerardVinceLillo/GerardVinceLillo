@@ -76,8 +76,15 @@ def fetch_contrib_grid():
     # Each week has 7 days, weekday is 0..6 (Sun..Sat), but contributionDays already ordered Sun..Sat.
     cols = []
     for w in weeks:
-        days = w["contributionDays"]
-        counts = [d["contributionCount"] for d in days]  # len=7
+        days = w.get("contributionDays", [])
+        counts = [d.get("contributionCount", 0) for d in days]
+
+        # GitHub can return partial weeks (<7). Pad to 7.
+        if len(counts) < 7:
+            counts = counts + [0] * (7 - len(counts))
+        elif len(counts) > 7:
+            counts = counts[:7]
+
         cols.append(counts)
 
     # Ensure exactly GRID_COLS
