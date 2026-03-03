@@ -42,9 +42,11 @@ LEVEL_COLORS = [
 PX, PY = 720, 135
 
 # Combat tuning
-FIRE_EVERY = 5        # lower = faster shooting
-DMG_PER_HIT = 1       # damage per tick
-MAX_ENEMIES = 28      # enemies spawned from contribution blocks
+FIRE_EVERY = 6         # lower = faster firing
+DMG_PER_HIT = 1        # damage per chain hit
+CHAIN_TARGETS = 3      # hits per shot
+CHAIN_RANGE = 170      # max distance between chain jumps (pixels)
+MAX_ENEMIES = 28       # enemies spawned from contribution blocks
 
 # Visual tuning
 ENEMY_ALPHA = 120
@@ -173,20 +175,8 @@ def enemy_pos(e, t_swarm):
     return ex, ey
 
 
-def pick_target(enemies, t_swarm):
-    best = None
-    best_d = 10**18
-    best_xy = None
-    for e in enemies:
-        if not e.get("alive"):
-            continue
-        ex, ey = enemy_pos(e, t_swarm)
-        d = (ex - PX) ** 2 + (ey - PY) ** 2
-        if d < best_d:
-            best_d = d
-            best = e
-            best_xy = (ex, ey)
-    return best, best_xy
+def dist2(a, b):
+    return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
 
 
 def apply_damage(e, dmg=1):
@@ -194,7 +184,56 @@ def apply_damage(e, dmg=1):
     e["hit_flash"] = 3
     if e["hp"] <= 0:
         e["alive"] = False
-        e["death_fx"] = 6  # small fade frames
+        e["death_fx"] = 7  # short fade sparkle
+
+
+def alive_enemies(enemies):
+    return [e for e in enemies if e.get("alive")]
+
+
+def build_enemy_positions(enemies, t_swarm):
+    # Precompute positions for targeting + drawing consistency
+    pos = {}
+    for idx, e in enumerate(enemies):
+        if not e.get("alive"):
+            continue
+        pos[idx] = enemy_pos(e, t_swarm)
+    return pos
+
+
+def pick_chain_targets(enemies, positions, start_xy, k=3, max_jump=170):
+    """
+    Choose up to k enemies for chain lightning.
+    - First target: nearest to start_xy
+    - Next targets: nearest to previous target, within max_jump
+    """
+    chosen = []
+    remaining = set(positions.keys())
+
+    cur_xy = start_xy
+    max_jump2 = max_jump * max_jump
+
+    for _ in range(k):
+        best = None
+        best_d = 10**18
+        for idx in remaining:
+            d = dist2(cur_xy, positions[idx])
+            if d < best_d:
+                best_d = d
+                best = idx
+
+        if best is None:
+            break
+
+        # For 2nd+ jumps, enforce max distance
+        if chosen and best_d > max_jump2:
+            break
+
+        chosen.append(best)
+        remaining.remove(best)
+        cur_xy = positions[best]
+
+    return chosen
 
 
 # -----------------------------
@@ -225,7 +264,7 @@ def make_frames(grid):
     total_cells = GRID_ROWS * GRID_COLS
 
     build_frames = 55
-    swarm_frames = 90
+    swarm_frames = 95
 
     # Choose enemy source blocks (top activity)
     active_cells = sorted(
@@ -248,7 +287,7 @@ def make_frames(grid):
                 "phase": rnd.random() * math.tau,
                 "speed": 0.7 + rnd.random() * 1.6,
                 "rad": 3 + lv,
-                "hp": 2 + lv * 2,     # tougher for higher activity blocks
+                "hp": 2 + lv * 2,     # higher activity -> tougher
                 "alive": True,
                 "hit_flash": 0,
                 "death_fx": 0,
@@ -286,41 +325,65 @@ def make_frames(grid):
             x, y = cell_pos(r, c)
             draw.rounded_rectangle((x, y, x + CELL, y + CELL), radius=3, fill=(8, 16, 13))
 
-        # FIRE: aim laser at nearest enemy and apply damage
-        lasers = []
-        if t_swarm % FIRE_EVERY == 0:
-            target, txy = pick_target(enemies, t_swarm)
-            if target and txy:
-                apply_damage(target, DMG_PER_HIT)
-                lasers.append((PX, PY, txy[0], txy[1]))
+        # Precompute enemy positions for consistent targeting/drawing
+        positions = build_enemy_positions(enemies, t_swarm)
 
-        # update hit flash + death fx timers
+        # CHAIN LIGHTNING: choose 3 targets and apply damage
+        chain_idxs = []
+        if (t_swarm % FIRE_EVERY == 0) and positions:
+            chain_idxs = pick_chain_targets(
+                enemies=enemies,
+                positions=positions,
+                start_xy=(PX, PY),
+                k=CHAIN_TARGETS,
+                max_jump=CHAIN_RANGE,
+            )
+            for idx in chain_idxs:
+                apply_damage(enemies[idx], DMG_PER_HIT)
+
+        # update timers
         for e in enemies:
             if e["hit_flash"] > 0:
                 e["hit_flash"] -= 1
             if (not e["alive"]) and e["death_fx"] > 0:
                 e["death_fx"] -= 1
 
-        # Draw lasers (glow + core line)
-        for (x1, y1, x2, y2) in lasers:
-            draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 120), width=6)
-            draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 235), width=2)
+        # Draw chain lightning segments (player -> t1 -> t2 -> t3)
+        if chain_idxs:
+            pts = [(PX, PY)] + [positions[idx] for idx in chain_idxs]
 
-        # Draw enemies (alive only); dead have a brief fade-out sparkle
-        for e in enemies:
-            ex, ey = enemy_pos(e, t_swarm)
+            # glow pass
+            for i in range(len(pts) - 1):
+                x1, y1 = pts[i]
+                x2, y2 = pts[i + 1]
+                draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 110), width=7)
+
+            # core pass
+            for i in range(len(pts) - 1):
+                x1, y1 = pts[i]
+                x2, y2 = pts[i + 1]
+                draw.line((x1, y1, x2, y2), fill=(0, 255, 127, 235), width=2)
+
+            # impact sparks (small dots on targets)
+            for idx in chain_idxs:
+                tx, ty = positions[idx]
+                draw.ellipse((tx - 2, ty - 2, tx + 2, ty + 2), fill=(0, 255, 127, 220))
+
+        # Draw enemies: alive only; dead have brief sparkle
+        for idx, e in enumerate(enemies):
+            if idx in positions:
+                ex, ey = positions[idx]
+            else:
+                ex, ey = enemy_pos(e, t_swarm)
+
             r0 = e["rad"]
 
             if e["alive"]:
-                if e["hit_flash"] > 0:
-                    fill = (0, 255, 127, ENEMY_HIT_ALPHA)
-                else:
-                    fill = (0, 255, 127, ENEMY_ALPHA)
+                fill = (0, 255, 127, ENEMY_HIT_ALPHA if e["hit_flash"] > 0 else ENEMY_ALPHA)
                 draw.ellipse((ex - r0, ey - r0, ex + r0, ey + r0), fill=fill)
             else:
                 if e["death_fx"] > 0:
-                    a = int(180 * (e["death_fx"] / 6))
-                    # tiny "xp pop"
+                    a = int(200 * (e["death_fx"] / 7))
                     draw.ellipse((ex - 2, ey - 2, ex + 2, ey + 2), fill=(0, 255, 127, a))
 
         return im
@@ -337,11 +400,11 @@ def make_frames(grid):
         draw_hud(d, "phase: BUILD // forging blocks from commits")
         frames.append(frame.convert("P", palette=Image.ADAPTIVE))
 
-    # Phase B: swarm (blocks become enemies + targeted laser kills)
+    # Phase B: swarm (blocks become enemies + chain lightning)
     for t in range(swarm_frames):
         frame = render(revealed, t_swarm=t)
         d = ImageDraw.Draw(frame)
-        draw_hud(d, "phase: SWARM // laser targets • enemies disappear")
+        draw_hud(d, "phase: SWARM // chain lightning • enemies disappear")
         frames.append(frame.convert("P", palette=Image.ADAPTIVE))
 
     return frames
