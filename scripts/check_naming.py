@@ -85,6 +85,12 @@ IGNORED_EXTENSIONS = {
     ".mov",
 }
 
+ALLOWED_DUNDER_FILES = {
+    "__init__.py",
+    "__main__.py",
+    "__about__.py",
+}
+
 TOKEN_RE = re.compile(r"^[a-z0-9_][a-z0-9_-]*$")
 
 
@@ -160,6 +166,8 @@ def main() -> int:
 
         name = parts[-1]
         if name.startswith(".") or name in IGNORED_FILES or name.endswith(IGNORED_SUFFIXES):
+            continue
+        if name in ALLOWED_DUNDER_FILES:
             continue
         if Path(name).suffix.lower() in IGNORED_EXTENSIONS:
             continue
