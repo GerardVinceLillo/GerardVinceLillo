@@ -1,57 +1,64 @@
-﻿<div align="center">
+<div align="center">
 
-# GERARD VINCE LILLO
-### Security Automation | Offensive Security | Cloud & Detection Engineering
+# Gerard Vince Lillo
+### Security automation, defensive tooling, and practical privacy engineering
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2800&pause=650&color=00FF7F&center=true&vCenter=true&width=950&lines=Security+Automation+Engineer;Privacy+Engineering+Builder;AWS+Security+%7C+Detection+%26+Response;Python+%7C+SOC+%7C+XDR" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2800&pause=650&color=00FF7F&center=true&vCenter=true&width=950&lines=Building+security+tools+people+will+actually+use;Parasideum+creator;PrivacyIntent+builder;Python+%7C+AWS+%7C+Detection+Engineering" />
 
 </div>
 
-## What I'm Building
+## About Me
 
-I build practical security systems that teams can actually run in production.
+I'm a security engineer focused on building tools and workflows that are usable in real environments, not just good in demos.
 
-- Automating noisy security workflows into clear, repeatable pipelines
-- Turning scan output into actionable risk decisions
-- Building privacy and security tooling that is fast, transparent, and extensible
+Most of my work sits at the intersection of:
 
-## Flagship Project: PrivacyIntent
+- defensive security tooling
+- privacy-focused engineering
+- security automation
+- cloud and detection workflows
 
-**PrivacyIntent** is now my primary project focus.
+I like turning noisy manual processes into systems that are clearer to operate, easier to trust, and faster to improve.
 
-- Open-source CLI for privacy-focused web scanning and risk scoring
-- Detects tracker exposure, weak cookie/header posture, and potential PII leaks
-- Produces Rich console output plus JSON/Markdown reports
-- Includes Pro-ready architecture for CI gates, policy enforcement, and monitoring
+## Current Focus
+
+### Parasideum
+
+Parasideum is my flagship project: a local-first defensive security agent and operator terminal for endpoint telemetry, drift review, persistence analysis, and privacy posture.
+
+- Built for explainable defensive visibility instead of black-box scoring
+- Focused on one host first, with room to grow into a broader defense platform
+- Designed around evidence, baselines, investigation flow, and practical operator use
 
 Links:
 
-- OSS: https://github.com/gerardvincelillo/privacyintent
-- Site highlight: https://gerardvincelillo.com/#projects
+- Repo: https://github.com/gerardvincelillo/parasideum
+- Project showcase: https://gerardvincelillo.com/#projects
 
-## Project Spotlight
+## Projects
 
-- **PrivacyIntent**: privacy scanning CLI + scoring engine + report outputs
-- **PrivacyIntent Pro (Private Offer)**: CI gate, policy-driven enforcement, monitoring workflows
-- **GuardSweep**: security monitoring and automation toolkit in Python
+- **Parasideum**: local-first endpoint defense terminal and investigation workflow
+- **PrivacyIntent**: privacy scanning CLI for trackers, headers, cookies, and possible data exposure
+- **PrivacyIntent Pro**: paid private extension for policy gates, monitoring, and compliance-style workflows
 
-## Security Highlights
+## Experience Highlights
 
-- **Trend Micro Vision One (XDR):** tuned detections, improved signal quality, and drove containment workflows
-- **AWS Malware Scanning Pipeline:** designed event-driven S3 scanning architecture with automated quarantine routing
-- **Security Automation Engineering:** built Python tooling for parsing, triage reporting, and vulnerability workflow automation
-- **Incident Investigation & Response:** performed endpoint analysis and coordinated containment to reduce dwell time
-- **Cloud Security Controls:** implemented IAM hardening, secure S3 configurations, and event-driven integrations
+- Improved detection quality and containment workflows in Trend Micro Vision One
+- Built event-driven AWS malware scanning pipelines with automated quarantine handling
+- Created Python tooling for triage, parsing, reporting, and vulnerability workflow automation
+- Worked on incident investigation, endpoint analysis, and response coordination
+- Implemented cloud security controls across IAM, S3, and event-driven integrations
 
-## Working Style
+## What Matters to Me
 
-I value systems that are:
+I care about systems that are:
 
 - clear to operate
 - easy to audit
-- hard to break
+- resilient under pressure
+- useful beyond toy examples
 
-## Contact
+## Connect
 
 - Website: https://gerardvincelillo.com
 - LinkedIn: https://www.linkedin.com/in/gerard-vince-lillo/
