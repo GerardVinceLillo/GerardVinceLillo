@@ -4,8 +4,8 @@ Use this checklist to keep the repository organized and to make the next milesto
 
 ## Documentation Baseline
 
-- [x] Project vision is documented in `docs/PROJECT-VISION.md`.
-- [x] A stack inventory exists in `docs/STACK-INVENTORY.md` or an equivalent repo-specific document.
+- [x] Project vision is documented in `docs/project_vision.md`.
+- [x] A stack inventory exists in `docs/stack_inventory.md` or an equivalent repo-specific document.
 - [x] This implementation checklist exists.
 - [x] A repo README exists.
 

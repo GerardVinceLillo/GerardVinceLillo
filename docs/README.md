@@ -4,9 +4,9 @@ This folder keeps planning, stack, and operational context organized for `gerard
 
 ## Core Docs
 
-- `IMPLEMENTATION-CHECKLIST.md`
-- `PROJECT-VISION.md`
-- `STACK-INVENTORY.md`
+- `implementation_checklist.md`
+- `project_vision.md`
+- `stack_inventory.md`
 
 ## Maintenance Rule
 
