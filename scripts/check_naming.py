@@ -48,6 +48,8 @@ IGNORED_DIRS = {
 IGNORED_FILES = {
     "README.md",
     "LICENSE",
+    "AGENTS.md",
+    "CLAUDE.md",
     "Dockerfile",
     "Makefile",
     "pyproject.toml",
