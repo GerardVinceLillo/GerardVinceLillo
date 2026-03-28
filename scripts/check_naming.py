@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 from __future__ import annotations
 
 import ast
@@ -12,7 +12,7 @@ except ModuleNotFoundError:  # pragma: no cover
     tomllib = None
 
 REPO_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-CLI_NAME_RE = re.compile(r"^[a-z0-9]+$")
+CLI_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MODULE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 
 IGNORED_DIRS = {
@@ -199,7 +199,7 @@ def main() -> int:
 
     for cmd in load_pyproject_scripts(Path("pyproject.toml")):
         if not CLI_NAME_RE.fullmatch(cmd):
-            violations.append(f"CLI command must be lowercase alnum only: {cmd}")
+            violations.append(f"CLI command must be lowercase kebab-case or alnum only: {cmd}")
 
     if violations:
         print("Naming standard violations:")
@@ -213,3 +213,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
