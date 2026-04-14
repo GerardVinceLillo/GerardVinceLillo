@@ -90,29 +90,6 @@ I build things that hold up when real pressure is applied — not just in contro
 
 ---
 
-## GitHub Stats
-
-<div align="center">
-
-<table>
-<tr>
-<td>
-
-![Gerard's GitHub Stats](https://github-readme-stats.vercel.app/api?username=gerardvincelillo&show_icons=true&hide_border=true&bg_color=0d1117&title_color=00FF7F&icon_color=00FF7F&text_color=c9d1d9)
-
-</td>
-<td>
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=gerardvincelillo&layout=compact&hide_border=true&bg_color=0d1117&title_color=00FF7F&text_color=c9d1d9)
-
-</td>
-</tr>
-</table>
-
-</div>
-
----
-
 ## Contribution Activity
 
 <div align="center">
