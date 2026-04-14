@@ -50,7 +50,6 @@ Local-first defensive security agent and operator terminal for endpoint telemetr
 - Persistence analysis, baseline drift, process review
 - Designed for one host first, with room to scale
 
-[![Repo](https://img.shields.io/badge/Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/gerardvincelillo/parasideum)
 [![Showcase](https://img.shields.io/badge/Showcase-000000?style=flat-square&logo=About.me&logoColor=00FF7F)](https://gerardvincelillo.com/#projects)
 
 </td>
