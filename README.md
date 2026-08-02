@@ -60,11 +60,15 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
 
 ## 📊 GitHub Telemetry & Stats
 
-<p align="center">
-  <img src="https://github-readme-stats-anuraghazra.vercel.app/api?username=gerardvincelillo&show_icons=true&theme=dark&bg_color=07070a&title_color=a78bfa&text_color=e5e7eb&icon_color=a78bfa&border_color=1f2937" alt="Gerard Vince Lillo's GitHub Stats" height="165" />
-  &nbsp;&nbsp;
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=gerardvincelillo&theme=black-ice&background=07070a&title=a78bfa&text=e5e7eb&icon=a78bfa&border=1f2937&stroke=a78bfa" alt="Gerard Vince Lillo's Streak Stats" height="165" />
-</p>
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=gerardvincelillo&theme=react-dark&hide_border=true&area=true" alt="Gerard Vince Lillo's Contribution Activity Graph" width="95%" />
+
+<br/><br/>
+
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=gerardvincelillo&theme=black-ice&background=07070a&title=a78bfa&text=e5e7eb&icon=a78bfa&border=1f2937&stroke=a78bfa" alt="Gerard Vince Lillo's Streak Stats" width="80%" />
+
+</div>
 
 ---
 
