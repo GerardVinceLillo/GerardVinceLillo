@@ -29,32 +29,79 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
 
 ## 🚀 Featured Projects
 
-<div align="center">
-
-| Project | Description | Stack / Focus | Links |
-| :--- | :--- | :--- | :--- |
-| 🛡️&nbsp;**[Parasideum](https://github.com/gerardvincelillo/parasideum)** | Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, and persistence analysis. | `Python` • `Linux&nbsp;Telemetry` • `Terminal` | [Repo](https://github.com/gerardvincelillo/parasideum)&nbsp;•&nbsp;[Showcase](https://gerardvincelillo.com/#projects) |
-| 🔒&nbsp;**[PrivacyIntent](https://github.com/gerardvincelillo/privacy-intent)** | Privacy scanning CLI for trackers, security headers, cookies, and potential data exposure. | `Python` • `Privacy&nbsp;Engineering` • `CLI` | [Repo](https://github.com/gerardvincelillo/privacy-intent) |
-| 💼&nbsp;**PrivacyIntent&nbsp;Pro** | Commercial policy gates, automated compliance monitoring, and privacy audit workflows. | `Python` • `Compliance` • `Enterprise` | `Private&nbsp;Extension` |
-| 🤖&nbsp;**Vinderaxus** | Multi-provider agentic security console for assessment planning and execution. | `Python` • `Agentic&nbsp;AI` • `Security&nbsp;Ops` | `Private&nbsp;Repo` |
-| 🌐&nbsp;**[Portfolio&nbsp;Site](https://gerardvincelillo.com)** | Security-hardened personal portfolio site with Cloudflare WAF, Turnstile, & Netlify edge protections. | `HTML/CSS/JS` • `Netlify` • `Cloudflare` | [Live&nbsp;Site](https://gerardvincelillo.com) |
-
-</div>
+<table>
+  <thead>
+    <tr>
+      <th align="left">Project</th>
+      <th align="left">Description</th>
+      <th align="left">Stack / Focus</th>
+      <th align="left">Links</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>🛡️ <a href="https://github.com/gerardvincelillo/parasideum">Parasideum</a></b></td>
+      <td>Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, and persistence analysis.</td>
+      <td><code>Python</code> <code>Linux Telemetry</code> <code>Terminal</code></td>
+      <td><a href="https://github.com/gerardvincelillo/parasideum">Repo</a> • <a href="https://gerardvincelillo.com/#projects">Showcase</a></td>
+    </tr>
+    <tr>
+      <td><b>🔒 <a href="https://github.com/gerardvincelillo/privacy-intent">PrivacyIntent</a></b></td>
+      <td>Privacy scanning CLI for trackers, security headers, cookies, and potential data exposure.</td>
+      <td><code>Python</code> <code>Privacy Engineering</code> <code>CLI</code></td>
+      <td><a href="https://github.com/gerardvincelillo/privacy-intent">Repo</a></td>
+    </tr>
+    <tr>
+      <td><b>💼 PrivacyIntent Pro</b></td>
+      <td>Commercial policy gates, automated compliance monitoring, and privacy audit workflows.</td>
+      <td><code>Python</code> <code>Compliance</code> <code>Enterprise</code></td>
+      <td><code>Private Extension</code></td>
+    </tr>
+    <tr>
+      <td><b>🤖 Vinderaxus</b></td>
+      <td>Multi-provider agentic security console for assessment planning and execution.</td>
+      <td><code>Python</code> <code>Agentic AI</code> <code>Security Ops</code></td>
+      <td><code>Private Repo</code></td>
+    </tr>
+    <tr>
+      <td><b>🌐 <a href="https://gerardvincelillo.com">Portfolio Site</a></b></td>
+      <td>Security-hardened personal portfolio site with Cloudflare WAF, Turnstile, & Netlify edge protections.</td>
+      <td><code>HTML/CSS/JS</code> <code>Netlify</code> <code>Cloudflare</code></td>
+      <td><a href="https://gerardvincelillo.com">Live Site</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## 🧰 Core Security Tools & Arsenal
 
-<div align="center">
-
-| Category | Tools & Platforms |
-| :--- | :--- |
-| **📊 SIEM & Telemetry** | `Splunk` • `Graylog` • `Wazuh` |
-| **🚨 Detection & EDR/SOAR** | `Trend&nbsp;Micro&nbsp;Vision&nbsp;One` • `CrowdStrike&nbsp;Falcon&nbsp;SOAR` • `Bitdefender&nbsp;GravityZone` |
-| **🛡️ Vuln & Cloud Posture** | `AWS&nbsp;(IAM,&nbsp;S3,&nbsp;EventBridge)` • `Terraform` • `Docker` • `Event-Driven&nbsp;Malware&nbsp;Pipelines` |
-| **💻 Code & Scripting** | `Python` • `Linux&nbsp;/&nbsp;Bash` • `Git&nbsp;/&nbsp;GitHub&nbsp;Actions` • `REST&nbsp;APIs&nbsp;&amp;&nbsp;Webhooks` |
-
-</div>
+<table>
+  <thead>
+    <tr>
+      <th align="left">Category</th>
+      <th align="left">Tools & Platforms</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>📊 SIEM & Telemetry</b></td>
+      <td><code>Splunk</code> <code>Graylog</code> <code>Wazuh</code></td>
+    </tr>
+    <tr>
+      <td><b>🚨 Detection & EDR/SOAR</b></td>
+      <td><code>Trend Micro Vision One</code> <code>CrowdStrike Falcon SOAR</code> <code>Bitdefender GravityZone</code></td>
+    </tr>
+    <tr>
+      <td><b>🛡️ Vuln & Cloud Posture</b></td>
+      <td><code>AWS (IAM, S3, EventBridge)</code> <code>Terraform</code> <code>Docker</code> <code>Malware Pipelines</code></td>
+    </tr>
+    <tr>
+      <td><b>💻 Code & Scripting</b></td>
+      <td><code>Python</code> <code>Linux / Bash</code> <code>GitHub Actions</code> <code>REST APIs & Webhooks</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
