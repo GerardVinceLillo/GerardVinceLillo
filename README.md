@@ -2,99 +2,66 @@
 
 # Gerard Vince Lillo
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2800&pause=650&color=00FF7F&center=true&vCenter=true&width=950&lines=Security+automation+that+works+in+real+environments;Building+Parasideum+%E2%80%94+local-first+endpoint+defense;Privacy+engineering+beyond+checkbox+compliance;Python+%7C+AWS+%7C+Detection+Engineering+%7C+CLI+Tooling" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=1000&color=A78BFA&center=true&vCenter=true&width=950&lines=Practical+defense.;Practical+detection.;Practical+automation.;Practical+response." alt="Practical defense. Practical detection. Practical automation. Practical response." />
 
-[![Website](https://img.shields.io/badge/gerardvincelillo.com-000000?style=for-the-badge&logo=About.me&logoColor=00FF7F)](https://gerardvincelillo.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gerard-vince-lillo/)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gerardvincelillo)
+### Security Engineer | INE eJPT Certified | Security Automation Specialist
 
-</div>
-
----
-
-## About
-
-I'm a security engineer who builds tools designed for real operational environments — not demos or audits. My work sits where defensive security, privacy engineering, and automation overlap: turning noisy manual processes into systems that are clear to operate, easy to audit, and fast to improve.
-
-When something doesn't exist and should, I build it.
-
----
-
-## Stack
-
-<div align="center">
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=FF9900)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Detection Engineering](https://img.shields.io/badge/Detection_Engineering-00FF7F?style=for-the-badge&logoColor=black)
-![CLI Tooling](https://img.shields.io/badge/CLI_Tooling-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
-![Security Automation](https://img.shields.io/badge/Security_Automation-B22222?style=for-the-badge&logoColor=white)
+[![Website](https://img.shields.io/badge/Website-gerardvincelillo.com-7c3aed?style=for-the-badge&logo=googlechrome&logoColor=white)](https://gerardvincelillo.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Gerard_Vince_Lillo-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gerard-vince-lillo/)
+[![Credly](https://img.shields.io/badge/Credly-eJPT_Certified-FF6B00?style=for-the-badge&logo=credly&logoColor=white)](https://www.credly.com/users/gerard-vince-lillo/)
+[![Email](https://img.shields.io/badge/Email-me%40gerardvincelillo.com-A78BFA?style=for-the-badge&logo=gmail&logoColor=white)](mailto:me@gerardvincelillo.com)
 
 </div>
 
 ---
 
-## Projects
+## ⚡ About Me
 
-<table>
-<tr>
-<td width="50%" valign="top">
+Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Workflows**. I design security systems that teams can actually run day to day.
 
-### Parasideum
-
-Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, persistence analysis, and privacy posture.
-
-- Explainable visibility — no black-box scoring
-- Evidence-based investigation flow with operator context
-- Persistence analysis, baseline drift, process review
-- Designed for one host first, with room to scale
-
-[![Showcase](https://img.shields.io/badge/Showcase-000000?style=flat-square&logo=About.me&logoColor=00FF7F)](https://gerardvincelillo.com/#projects)
-
-</td>
-<td width="50%" valign="top">
-
-### PrivacyIntent
-
-Privacy scanning CLI for web properties — trackers, headers, cookies, and data exposure signals.
-
-- Inspects real HTTP behavior, not just policy docs
-- Flags consent gaps, tracking headers, and exposure patterns
-- Designed to be run regularly, not just at launch
-
-[![Repo](https://img.shields.io/badge/Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/gerardvincelillo/privacyintent)
-
-</td>
-</tr>
-</table>
-
-> **PrivacyIntent Pro** — extended private edition with policy gates, scheduled monitoring, and compliance-style reporting. Available separately. → [Contact via site](https://gerardvincelillo.com)
+- 🎯 **What I optimize for**: Clear signal, repeatable workflows, and measurable improvements. Practical controls over heavy process.
+- 🛡️ **Defensive Engineering**: Local-first telemetry, endpoint drift review, persistence analysis, and explainable defensive visibility.
+- ☁️ **Cloud & Automation**: Event-driven AWS security pipelines, automated quarantine handling, and vulnerability workflow automation.
 
 ---
 
-## Experience
-
-I've worked across detection engineering, cloud security, and incident response in environments where the tooling had to actually hold up under pressure.
-
-- Improved detection quality and containment workflows in Trend Micro Vision One
-- Built event-driven AWS malware scanning pipelines with automated quarantine handling
-- Developed Python tooling for triage, parsing, reporting, and vulnerability workflow automation
-- Implemented cloud security controls across IAM, S3, and event-driven integrations
-
----
-
-## What Matters to Me
-
-I build things that hold up when real pressure is applied — not just in controlled demos. That means evidence over assumptions, clarity over convenience, and systems that operators can trust when it matters. Parasideum and PrivacyIntent both exist because those things were missing.
-
----
-
-## Contribution Activity
+## 🚀 Featured Projects
 
 <div align="center">
 
-![Contribution Activity](./assets/polygon-swarm.gif)
+| Project | Description | Stack / Focus | Links |
+| :--- | :--- | :--- | :--- |
+| 🛡️ **[Parasideum](https://github.com/gerardvincelillo/parasideum)** | Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, and persistence analysis. | Python \| Linux Telemetry \| Defense Terminal | [Repo](https://github.com/gerardvincelillo/parasideum) • [Showcase](https://gerardvincelillo.com/#projects) |
+| 🔒 **[PrivacyIntent](https://github.com/gerardvincelillo/privacy-intent)** | Privacy scanning CLI for trackers, security headers, cookies, and potential data exposure. | Python \| Privacy Engineering \| CLI | [Repo](https://github.com/gerardvincelillo/privacy-intent) |
+| 💼 **PrivacyIntent Pro** | Commercial policy gates, automated compliance monitoring, and privacy audit workflows. | Python \| Compliance \| Enterprise | Private Extension |
+| 🤖 **Vinderaxus** | Multi-provider agentic security console for assessment planning and execution. | Python \| Agentic AI \| Security Ops | Private Repo |
+| 🌐 **[gerardvincelillo.com](https://gerardvincelillo.com)** | Security-hardened personal portfolio site with Cloudflare WAF, Turnstile, & Netlify edge protections. | HTML / CSS / JS \| Netlify \| Cloudflare | [Live Site](https://gerardvincelillo.com) |
+
+</div>
+
+---
+
+## 🧰 Core Security Tools & Arsenal
+
+<div align="center">
+
+| Category | Tools & Platforms |
+| :--- | :--- |
+| **📊 SIEM & Telemetry** | `Splunk` • `Graylog` • `Wazuh` |
+| **🚨 Detection & EDR/SOAR** | `Trend Micro Vision One` • `CrowdStrike Falcon SOAR` • `Bitdefender GravityZone` |
+| **🛡️ Vuln & Cloud Posture** | `AWS (IAM, S3, EventBridge)` • `Terraform` • `Docker` • `Event-Driven Malware Pipelines` |
+| **💻 Code & Scripting** | `Python` • `Linux / Bash` • `Git / GitHub Actions` • `REST APIs & Webhooks` |
+
+</div>
+
+---
+
+## 📊 GitHub Telemetry & Stats
+
+<div align="center">
+
+<img src="https://github-readme-stats.vercel.app/api?username=gerardvincelillo&show_icons=true&theme=synthwave&bg_color=07070a&title_color=a78bfa&text_color=e5e7eb&icon_color=a78bfa&border_color=1f2937&hide_border=false" alt="Gerard Vince Lillo's GitHub Stats" width="48%" />
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=gerardvincelillo&theme=black-ice&background=07070a&title=a78bfa&text=e5e7eb&icon=a78bfa&border=1f2937&stroke=a78bfa" alt="Gerard Vince Lillo's Streak Stats" width="48%" />
 
 </div>
 
@@ -102,6 +69,10 @@ I build things that hold up when real pressure is applied — not just in contro
 
 <div align="center">
 
-[gerardvincelillo.com](https://gerardvincelillo.com) · [LinkedIn](https://www.linkedin.com/in/gerard-vince-lillo/)
+### 🕹️ Contribution Activity Swarm
+
+![](./assets/polygon-swarm.gif)
+
+*Custom polygon arcade swarm generated from live contribution data.*
 
 </div>
