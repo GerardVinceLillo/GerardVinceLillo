@@ -55,7 +55,7 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
       <td><b>💼 PrivacyIntent Pro</b></td>
       <td>Commercial policy gates, automated compliance monitoring, and privacy audit workflows.</td>
       <td><code>Python</code> <code>Compliance</code> <code>Enterprise</code></td>
-      <td><code>Private Extension</code></td>
+      <td><code>Private Repo</code></td>
     </tr>
     <tr>
       <td><b>🤖 Vinderaxus</b></td>
