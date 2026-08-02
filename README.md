@@ -33,11 +33,11 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
 
 | Project | Description | Stack / Focus | Links |
 | :--- | :--- | :--- | :--- |
-| 🛡️ **[Parasideum](https://github.com/gerardvincelillo/parasideum)** | Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, and persistence analysis. | `Python` • `Linux Telemetry` • `Terminal` | <nobr>[Repo](https://github.com/gerardvincelillo/parasideum) \| [Showcase](https://gerardvincelillo.com/#projects)</nobr> |
-| 🔒 **[PrivacyIntent](https://github.com/gerardvincelillo/privacy-intent)** | Privacy scanning CLI for trackers, security headers, cookies, and potential data exposure. | `Python` • `Privacy Engineering` • `CLI` | <nobr>[Repo](https://github.com/gerardvincelillo/privacy-intent)</nobr> |
-| 💼 **PrivacyIntent Pro** | Commercial policy gates, automated compliance monitoring, and privacy audit workflows. | `Python` • `Compliance` • `Enterprise` | <nobr>`Private Extension`</nobr> |
-| 🤖 **Vinderaxus** | Multi-provider agentic security console for assessment planning and execution. | `Python` • `Agentic AI` • `Security Ops` | <nobr>`Private Repo`</nobr> |
-| 🌐 **[Portfolio Site](https://gerardvincelillo.com)** | Security-hardened personal portfolio site with Cloudflare WAF, Turnstile, & Netlify edge protections. | `HTML/CSS/JS` • `Netlify` • `Cloudflare` | <nobr>[Live Site](https://gerardvincelillo.com)</nobr> |
+| 🛡️&nbsp;**[Parasideum](https://github.com/gerardvincelillo/parasideum)** | Local-first defensive security agent and operator terminal for endpoint telemetry, drift review, and persistence analysis. | `Python` • `Linux&nbsp;Telemetry` • `Terminal` | [Repo](https://github.com/gerardvincelillo/parasideum)&nbsp;•&nbsp;[Showcase](https://gerardvincelillo.com/#projects) |
+| 🔒&nbsp;**[PrivacyIntent](https://github.com/gerardvincelillo/privacy-intent)** | Privacy scanning CLI for trackers, security headers, cookies, and potential data exposure. | `Python` • `Privacy&nbsp;Engineering` • `CLI` | [Repo](https://github.com/gerardvincelillo/privacy-intent) |
+| 💼&nbsp;**PrivacyIntent&nbsp;Pro** | Commercial policy gates, automated compliance monitoring, and privacy audit workflows. | `Python` • `Compliance` • `Enterprise` | `Private&nbsp;Extension` |
+| 🤖&nbsp;**Vinderaxus** | Multi-provider agentic security console for assessment planning and execution. | `Python` • `Agentic&nbsp;AI` • `Security&nbsp;Ops` | `Private&nbsp;Repo` |
+| 🌐&nbsp;**[Portfolio&nbsp;Site](https://gerardvincelillo.com)** | Security-hardened personal portfolio site with Cloudflare WAF, Turnstile, & Netlify edge protections. | `HTML/CSS/JS` • `Netlify` • `Cloudflare` | [Live&nbsp;Site](https://gerardvincelillo.com) |
 
 </div>
 
@@ -50,9 +50,9 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
 | Category | Tools & Platforms |
 | :--- | :--- |
 | **📊 SIEM & Telemetry** | `Splunk` • `Graylog` • `Wazuh` |
-| **🚨 Detection & EDR/SOAR** | `Trend Micro Vision One` • `CrowdStrike Falcon SOAR` • `Bitdefender GravityZone` |
-| **🛡️ Vuln & Cloud Posture** | `AWS (IAM, S3, EventBridge)` • `Terraform` • `Docker` • `Event-Driven Malware Pipelines` |
-| **💻 Code & Scripting** | `Python` • `Linux / Bash` • `Git / GitHub Actions` • `REST APIs & Webhooks` |
+| **🚨 Detection & EDR/SOAR** | `Trend&nbsp;Micro&nbsp;Vision&nbsp;One` • `CrowdStrike&nbsp;Falcon&nbsp;SOAR` • `Bitdefender&nbsp;GravityZone` |
+| **🛡️ Vuln & Cloud Posture** | `AWS&nbsp;(IAM,&nbsp;S3,&nbsp;EventBridge)` • `Terraform` • `Docker` • `Event-Driven&nbsp;Malware&nbsp;Pipelines` |
+| **💻 Code & Scripting** | `Python` • `Linux&nbsp;/&nbsp;Bash` • `Git&nbsp;/&nbsp;GitHub&nbsp;Actions` • `REST&nbsp;APIs&nbsp;&amp;&nbsp;Webhooks` |
 
 </div>
 
@@ -61,7 +61,7 @@ Focused on **Security Automation**, **SIEM Engineering**, and **SOAR-Driven Work
 ## 📊 GitHub Telemetry & Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=gerardvincelillo&show_icons=true&theme=dark&bg_color=07070a&title_color=a78bfa&text_color=e5e7eb&icon_color=a78bfa&border_color=1f2937" alt="Gerard Vince Lillo's GitHub Stats" height="165" />
+  <img src="https://github-readme-stats-anuraghazra.vercel.app/api?username=gerardvincelillo&show_icons=true&theme=dark&bg_color=07070a&title_color=a78bfa&text_color=e5e7eb&icon_color=a78bfa&border_color=1f2937" alt="Gerard Vince Lillo's GitHub Stats" height="165" />
   &nbsp;&nbsp;
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=gerardvincelillo&theme=black-ice&background=07070a&title=a78bfa&text=e5e7eb&icon=a78bfa&border=1f2937&stroke=a78bfa" alt="Gerard Vince Lillo's Streak Stats" height="165" />
 </p>
