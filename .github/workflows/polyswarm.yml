@@ -2,7 +2,7 @@ name: Polygon Swarm (Contrib -> Enemies)
 
 on:
   schedule:
-    - cron: "0 0 */4 * *"   # every 4 days
+    - cron: "0 0 * * 0"   # weekly (every Sunday at 00:00 UTC)
   workflow_dispatch:
 
 permissions:
